@@ -73,13 +73,13 @@ int main(int argc, char **argv)
                         Point end(counter, IMG_HEIGHT - (pixel_values[c][p] / RATIO));
                         switch(c)
                         {
-                        case 0: // blue
+                        case 0: // H
                                 line(img_hist, start, end, Scalar(0, 0, 255));
                                 break;
-                        case 1: // green
+                        case 1: // S
                                 line(img_hist, start, end, Scalar(0, 255, 0));
                                 break;
-                        case 2: // red
+                        case 2: // V
                                 line(img_hist, start, end, Scalar(255, 0, 0));
                                 break;
                         };
@@ -89,84 +89,7 @@ int main(int argc, char **argv)
         imshow("Histogram", img_hist);
         waitKey(0);
         destroyWindow("Histogram");
-
-// #if NEW_V
-//         uint8_t pixels_h[256], pixels_s[256], pixels_v[256];
-
-//         const int total_pixels = img_hsv.rows * img_hsv.cols;
-//         const int RATIO = 1000 / IMG_HEIGHT;
-//         const int STEP = IMG_WIDTH / 256;
-
-//         for(int p = 0; p < total_pixels; ++p)
-//         {
-//                 uint8_t pixel = img_hsv_channels[0].at<uint8_t>(p);
-//                 pixels_h[pixel]++;
-//         }
-
-//         for(int p = 0; p < total_pixels; ++p)
-//         {
-//                 uint8_t pixel = img_hsv_channels[1].at<uint8_t>(p);
-//                 pixels_s[pixel]++;
-//         }
-
-//         for(int p = 0; p < total_pixels; ++p)
-//         {
-//                 uint8_t pixel = img_hsv_channels[2].at<uint8_t>(p);
-//                 pixels_v[pixel]++;
-//         }
-
-
-//         ssize_t counter = 0;
-//         for(ssize_t p = 0; p < 255;)
-//         {
-//                 Point start(counter, IMG_HEIGHT - (pixels_h[p] / RATIO));
-//                 counter += STEP;
-//                 p++;
-//                 Point end(counter, IMG_HEIGHT - (pixels_h[p] / RATIO));
-//                 line(img_hist, start, end, Scalar(0, 0, 255));
-//         };
-//         counter = 0;
-
-//         for(ssize_t p = 0; p < 255;)
-//         {
-//                 Point start(counter, IMG_HEIGHT - (pixels_s[p] / RATIO));
-//                 counter += STEP;
-//                 p++;
-//                 Point end(counter, IMG_HEIGHT - (pixels_s[p] / RATIO));
-//                 line(img_hist, start, end, Scalar(0, 255, 0));
-//         };
-//         counter = 0;
-        
-//         for(ssize_t p = 0; p < 255;)
-//         {
-//                 Point start(counter, IMG_HEIGHT - (pixels_v[p] / RATIO));
-//                 counter += STEP;
-//                 p++;
-//                 Point end(counter, IMG_HEIGHT - (pixels_v[p] / RATIO));
-//                 line(img_hist, start, end, Scalar(255, 0, 0));
-//         };
-
-//         imshow("Histogram", img_hist);
-//         waitKey(0);
-//         destroyWindow("Histogram");
-// #endif
-        
-        /* Mat hist; */
-        /* int channels[] = {0, 1, 2}; */
-        /* int dims = 3; // Only 1 channel, the hue channel */
-        /* int histSize[] = {0, 30}; // 9 bins, 1 each for Red, RY, Yellow, YG etc. */
-        /* float hRange[] = {0, 180}; */
-        /* float sRange[] = {0, 256}; */
-        /* float vRange[] = {0, 256}; */
-        /* const float *ranges[] = {hRange, sRange, vRange}; */
-
-        /* std::cout << "Displaying new histogram" << std::endl; */
-        
-        /* calcHist(&img_hsv, 1, channels, Mat(), hist, dims, histSize, ranges, true, false); */
-        /* imshow("Histogram", hist); */
-        /* waitKey(0); */
-        /* destroyWindow("Histogram"); */
-        
+      
         destroyAllWindows();
         
 }

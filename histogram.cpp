@@ -6,7 +6,7 @@
 
 using namespace cv;
 
-const int IMG_WIDTH  = 512;
+const int IMG_WIDTH  = 300;
 const int IMG_HEIGHT = 400;
 
 int main(int argc, char **argv)
@@ -14,7 +14,7 @@ int main(int argc, char **argv)
         Mat img_gray;
         Mat hist_img = Mat(IMG_HEIGHT, IMG_WIDTH, CV_8UC1, Scalar(0));
 
-        Mat img = imread("./Monkey.jpep");
+        Mat img = imread(argv[1]);
         if(!img.data) {
                 std::cout << "Error reading image" << std::endl;
                 return 1;

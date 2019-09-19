@@ -6,14 +6,14 @@
 
 using namespace cv;
 
-const int IMG_WIDTH  = 512;
+const int IMG_WIDTH  = 1024;
 const int IMG_HEIGHT = 512;
 const char CHANNELS = 3;
 
 int main(int argc, char **argv)
 {
         Mat hist_img = Mat(IMG_HEIGHT, IMG_WIDTH, CV_8UC3, Scalar(0));
-        Mat img = imread("./Monkey.jpep");
+        Mat img = imread(argv[1]);
         if(!img.data)
         {
                 std::cout << "Error loading image." <<std::endl;
@@ -39,14 +39,16 @@ int main(int argc, char **argv)
                 pixel_values[2][(uint8_t)pixel.val[2]]++; // red
                 
         }
-        
+
+        ssize_t counter = 0;
         for(ssize_t c = 0; c < CHANNELS; ++c)
         {
                 for(ssize_t p = 0; p < 255;)
                 {
-                        Point start(p, IMG_HEIGHT - (pixel_values[c][p] / RATIO));
-                        p += STEP;
-                        Point end(p, IMG_HEIGHT - (pixel_values[c][p] / RATIO));
+                        Point start(counter, IMG_HEIGHT - (pixel_values[c][p] / RATIO));
+                        counter += STEP;
+                        p++;
+                        Point end(counter, IMG_HEIGHT - (pixel_values[c][p] / RATIO));
                         switch(c)
                         {
                         case 0: // blue
@@ -60,6 +62,7 @@ int main(int argc, char **argv)
                                 break;
                         };
                 };
+                counter = 0; 
         };
         
         imshow("Histogram", hist_img);
