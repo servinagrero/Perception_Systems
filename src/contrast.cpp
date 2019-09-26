@@ -32,7 +32,9 @@ int main(int argc, char **argv) {
 
         for (int p = 0; p < 256; ++p) 
         {
-                std::cout << "Intensity[" << p << "] = " 
+                std::cout << "Intensity[" 
+                        << std::setfill('0') << std::setw(3)
+                        << p << "] = " 
                         << pixel_values[p] << std::endl;
         }
 
@@ -86,6 +88,34 @@ int main(int argc, char **argv) {
         imshow("LUT applied", img_result);
         waitKey(0);
         destroyWindow("LUT applied");
-        destroyAllWindows();
+
 #endif
+
+#if COLOR_MAP
+        // Create and apply a color map to an image
+        // To create a custom color_map we can create three LUTs for each 
+        // channel and then apply in to the three channels
+
+        Mat img_color_map;
+        Mat img_orig_color = imread(argv[1]);
+        Mat color_map = Mat(1, 256, CV_8UC3);
+        Vec3b point;
+
+        for(int m = 0; m < 256; ++m)
+        {
+                point.val[0] = 255 * (log(1 + m)/log(1 + 255));
+                point.val[1] = 255 * (log(1 + m)/log(1 + 255));
+                point.val[2] = 255 * (log(1 + m)/log(1 + 255));
+                color_map.at<Vec3b>(m) = point;
+        };
+
+        // applyColorMap(img_orig_color, img_color_map, COLORMAP_JET);
+        LUT(img_orig_color, color_map, img_color_map);
+
+        imshow("Color map applied", img_color_map);
+        waitKey(0);
+        destroyWindow("Color map applied");
+#endif
+
+        destroyAllWindows();
 }
