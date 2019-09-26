@@ -1,21 +1,22 @@
 CXX ?= g++
 CXXFLAGS += -pedantic -Wall -Wextra -g -fPIC $(OCV_F)
-LDLIBS = $(LDFLAGS) $(OCV)
+LDLIBS += $(CXXFLAGS) $(OCV_L)
 
 OCV_L = $(pkg-config --libs opencv)
 OCV_F = $(pkg-config --cflags opencv)
 
 SRC_FILES := $(wildcard *.cpp)
-OBJFILES  := $(patsubst %.cpp,%.o,$(SRCFILES))
+OBJ_FILES  := $(patsubst %.cpp,%,$(SRC_FILES))
 
 BUILD_DIR := build
 
-%.cpp: $(OBJFILES)
-    $(LINKER) $^ -o $@
-
-
-%.o: %.cpp
-    $(CXX) $(CXXFLAGS) $(INCDIRS) -c $< -o $@
+all: $(BUILD_DIR) $(OBJ_FILES)
 
 $(BUILD_DIR):
 	mkdir $(BUILD_DIR)
+
+clean:
+	rm -rf $(BUILD_DIR)
+	rm -rf $(OBJ_FILES)
+
+.PHONY: all clean
