@@ -103,14 +103,17 @@ int main(int argc, char **argv) {
 
         for(int m = 0; m < 256; ++m)
         {
-                point.val[0] = 255 * (log(1 + m)/log(1 + 255));
-                point.val[1] = 255 * (log(1 + m)/log(1 + 255));
-                point.val[2] = 255 * (log(1 + m)/log(1 + 255));
+                /* point.val[0] = 255 * (log(1 + m)/log(1 + 255)); */
+                /* point.val[1] = 255 * (log(1 + m)/log(1 + 255)); */
+                /* point.val[2] = 255 * (log(1 + m)/log(1 + 255)); */
+                point.val[0] = m;
+                point.val[1] = m;
+                point.val[2] = 255 - m;
                 color_map.at<Vec3b>(m) = point;
         };
 
-        // applyColorMap(img_orig_color, img_color_map, COLORMAP_JET);
-        LUT(img_orig_color, color_map, img_color_map);
+     applyColorMap(img_orig_color, img_color_map, COLORMAP_JET);
+        /* LUT(img_orig_color, color_map, img_color_map); */
 
         imshow("Color map applied", img_color_map);
         waitKey(0);
