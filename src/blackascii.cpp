@@ -1,6 +1,7 @@
-// Program to read a black and white image
+// Program to read a black and white image and convert it to ascii
 //
 // Create ascii video rendering from the webcam using buffers
+
 #include <fstream>
 #include <iostream>
 #include <unistd.h>

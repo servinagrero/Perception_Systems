@@ -9,8 +9,7 @@
 using namespace cv;
 
 int main(int argc, char **argv) {
-
-        // Amplitud del histograma de una imagen
+        // Amplitude of the histogram
         Mat img_orig = imread(argv[1], IMREAD_GRAYSCALE);
         if (!img_orig.data) {
                 std::cout << "Error loading image." << std::endl;
@@ -44,13 +43,15 @@ int main(int argc, char **argv) {
         minMaxLoc(img_orig, &min_val, &max_val, &min_loc, &max_loc);
         std::cout << "Min val " << min_val << " at pos " << min_loc
                     << ", max val: " << max_val << " at pos " << max_loc << std::endl;
-
 #endif
 
 #if EQUALIZE_HIST
         Mat hist_eq, img_result;
         equalizeHist(img_orig, hist_eq);
 
+        // If we apply now the minMaxLoc function to the equalized image
+        // the minimum is at 0 and the maximum at 255 because we have stretched 
+        // the histogram to have all possible values
         imshow("Equalized histogram", hist_eq);
         waitKey(0);
         destroyWindow("Equalized histogram");
@@ -94,7 +95,8 @@ int main(int argc, char **argv) {
 #if COLOR_MAP
         // Create and apply a color map to an image
         // To create a custom color_map we can create three LUTs for each 
-        // channel and then apply in to the three channels
+        // channel and then apply in to the three channels, or a LUT with 
+        // 3 channels
 
         Mat img_color_map;
         Mat img_orig_color = imread(argv[1]);
@@ -103,16 +105,13 @@ int main(int argc, char **argv) {
 
         for(int m = 0; m < 256; ++m)
         {
-                /* point.val[0] = 255 * (log(1 + m)/log(1 + 255)); */
-                /* point.val[1] = 255 * (log(1 + m)/log(1 + 255)); */
-                /* point.val[2] = 255 * (log(1 + m)/log(1 + 255)); */
                 point.val[0] = m;
                 point.val[1] = m;
                 point.val[2] = 255 - m;
                 color_map.at<Vec3b>(m) = point;
         };
 
-     applyColorMap(img_orig_color, img_color_map, COLORMAP_JET);
+        applyColorMap(img_orig_color, img_color_map, COLORMAP_JET);
         /* LUT(img_orig_color, color_map, img_color_map); */
 
         imshow("Color map applied", img_color_map);

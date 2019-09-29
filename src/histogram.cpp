@@ -1,3 +1,5 @@
+// Program to obtain and draw the histogram of an image
+
 #include <iostream>
 
 #include <opencv2/opencv.hpp>
@@ -28,7 +30,7 @@ int main(int argc, char **argv)
 
         int pixel_values[256] = {0};
 
-        // Should be 1 for a gray image
+        // Should be 1 for a gray image and 3 for color images
         std::cout << "Image channels: " << img_gray.channels() << std::endl;
 
         const int total_pixels = img_gray.rows * img_gray.cols;
@@ -41,8 +43,13 @@ int main(int argc, char **argv)
         }
         
         // The histogram is divided into x and y axis
-        // X axis goes from 0 to 255
-        // Y axis goes from 0 to (img.rows * img.cols) / RATIO
+        // X axis goes from 0 to 255 representing the intensity of the pixel
+        // Y axis represents the number of pixels with X intensity
+        // In our case, it goes from 0 to (img.rows * img.cols) / RATIO
+        // to prevent it from drawing outside the window
+        //
+        // This histogram is a bar histogram and does not take into account the
+        // canvas width, as happens with color_histogram.cpp
         for(ssize_t v = 0; v < 256; ++v)
         {
                 Point start(v, IMG_HEIGHT);
