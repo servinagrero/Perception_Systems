@@ -75,7 +75,7 @@ int main(int argc, char **argv)
 
         const float SCALE = 0.6;
         Mat cameraFrame, frame_gray, frame_bw, frame_gray_res;
-        int thresshold = 128, thresshold_up = 120, thresshold_dn = 60;
+        int threshold = 128, threshold_up = 120, threshold_dn = 60;
         char s_black = '&', s_gray = 'o', s_ws = ' ';
         char selector = 0;
 
@@ -90,7 +90,7 @@ int main(int argc, char **argv)
                 }
 
                 cvtColor(cameraFrame, frame_gray, CV_BGR2GRAY);
-                resize((frame_gray > thresshold), frame_bw, cv::Size(), SCALE, SCALE);
+                resize((frame_gray > threshold), frame_bw, cv::Size(), SCALE, SCALE);
                 resize(frame_gray, frame_gray_res, cv::Size(), SCALE, SCALE);
 
                 imshow("Frame", frame_gray);
@@ -119,13 +119,13 @@ int main(int argc, char **argv)
                                 } else { // Gray scale
 
                                         uint8_t symbol = frame_gray_res.at<uint8_t>(r, c);
-                                        if (symbol <= thresshold_dn) {
+                                        if (symbol <= threshold_dn) {
                                                 std::cout << s_black;
                                         }
-                                                else if (symbol >= thresshold_up) {
+                                                else if (symbol >= threshold_up) {
                                                 std::cout << s_ws;
                                         }
-                                        else if (symbol > thresshold_dn && symbol < thresshold_up) {
+                                        else if (symbol > threshold_dn && symbol < threshold_up) {
                                                 std::cout << s_gray;
                                         }
                                         else {
@@ -143,26 +143,26 @@ int main(int argc, char **argv)
                                 destroyAllWindows();
                                 break;
                         case 117: // u
-                                thresshold = thresshold >= 255 ? 255 : thresshold + 10;
-                                thresshold_up = thresshold_up >= 255 ? 255 : thresshold_up + 10;
+                                threshold = threshold >= 255 ? 255 : threshold + 10;
+                                threshold_up = threshold_up >= 255 ? 255 : threshold_up + 10;
                                 break;
                         case 85: // U
-                                thresshold_dn = thresshold_dn >= 255 ? 255 : thresshold_dn + 10;
+                                threshold_dn = threshold_dn >= 255 ? 255 : threshold_dn + 10;
                                 break;
                         case 68: // U
-                                thresshold_up = thresshold_up <= 0 ? 0 : thresshold_up - 10;
+                                threshold_up = threshold_up <= 0 ? 0 : threshold_up - 10;
                                 break;
                         case 100: // d
-                                thresshold = thresshold <= 0 ? 0 : thresshold - 10;
-                                thresshold_dn = thresshold_dn <= 0 ? 0 : thresshold_dn - 10;
+                                threshold = threshold <= 0 ? 0 : threshold - 10;
+                                threshold_dn = threshold_dn <= 0 ? 0 : threshold_dn - 10;
                                 break;
-                        case 105: // b
+                        case 105: // i
                                 char temp;
                                 temp = s_black;
                                 s_black = s_ws;
                                 s_ws = temp;
                                 break;
-                        case 98:
+                        case 98: // b
                                 selector = !selector;
                 }
           }
