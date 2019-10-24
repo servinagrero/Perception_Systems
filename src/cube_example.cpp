@@ -56,8 +56,8 @@ void DrawCube(void) {
 }
 
 void animation(void) {
-  yRotated += 0.000;
-  xRotated += 0.002;
+  yRotated += 0.01;
+  xRotated += 0.02;
   DrawCube();
 }
 

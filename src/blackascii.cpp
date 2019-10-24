@@ -77,7 +77,7 @@ int main(int argc, char **argv)
         const float SCALE = 0.6;
         Mat cameraFrame, frame_gray, frame_bw, frame_gray_res;
         int threshold = 128, threshold_up = 120, threshold_dn = 60;
-        char s_black = '&', s_gray = 'o', s_ws = ' ';
+        char s_black = '&', s_gray = '-', s_ws = ' ';
         char selector = 0;
 
         // TODO: Fix flickering issue when drawing text on the screen
